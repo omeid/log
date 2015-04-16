@@ -34,12 +34,12 @@ func New(prefix string) Log {
 	return &logger{l, ""}
 }
 
-type Printer interface {
+type printer interface {
 	Printf(string, ...interface{})
 }
 
 type logger struct {
-	printer Printer
+	printer printer
 	prefix  string
 }
 
