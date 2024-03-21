@@ -9,6 +9,9 @@ import (
 )
 
 type Log interface {
+	Log(v ...interface{})
+	Logf(format string, v ...interface{})
+
 	Info(v ...interface{})
 	Infof(format string, v ...interface{})
 
@@ -48,6 +51,14 @@ func (l *logger) New(prefix string) Log {
 }
 
 var bold = color.New(color.Bold).SprintfFunc()
+
+func (l *logger) Log(v ...interface{}) {
+	l.printer.Printf("%s%s ", l.prefix, fmt.Sprint(v...))
+}
+
+func (l *logger) Logf(format string, v ...interface{}) {
+	l.Log(fmt.Sprintf(format, v...))
+}
 
 func (l *logger) Notice(v ...interface{}) {
 	l.printer.Printf(bold("[NOTE] %s%s ", l.prefix, fmt.Sprint(v...)))
